@@ -154,9 +154,9 @@ CUSTOMERS-RETENTION-INTELLIGENCE-PLATFORM/
 
 ✅ Business Understanding Completed
 
-🔄 Data Collection (In Progress)
+✅ Data Collection completed 
 
-⏳ Data Understanding
+🔄 Data Understanding (in process)
 
 ⏳ Data Cleaning
 
