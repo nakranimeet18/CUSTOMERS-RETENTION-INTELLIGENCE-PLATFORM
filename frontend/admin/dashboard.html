@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | ChurnIQ</title>
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/sidebar.css">
+  <link rel="stylesheet" href="/assets/css/statcards.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">CQ</div>
+        <div class="sidebar-brand-name">ChurnIQ</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-group-label">Main</div>
+        <a href="/admin/dashboard.html" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Dashboard
+        </a>
+        <a href="/admin/users.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          All Users
+        </a>
+        <a href="/admin/churned.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="9" x2="12" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+          Churned Users
+        </a>
+        <a href="/admin/offers.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Offers & Vouchers
+        </a>
+        <a href="/admin/data.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+          Customer Data (CSV/DB)
+        </a>
+        <a href="/admin/analytics.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Churn Analytics
+        </a>
+
+        <div class="nav-group-label" style="margin-top: 1.5rem;">Shortcuts</div>
+        <a href="/user/dashboard.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          User Portal View
+        </a>
+      </nav>
+    </aside>
+    
+
+    <div class="main-wrapper">
+
+      <header class="top-bar">
+        <h1 class="page-title">Executive Dashboard</h1>
+        <div class="account-dropdown-wrapper">
+          <button id="account-dropdown-btn" class="account-btn">
+            <div id="admin-avatar-char" class="avatar-circle">A</div>
+            <span id="admin-display-name">Administrator</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">&#9660;</span>
+          </button>
+          <div id="account-dropdown-menu" class="account-menu">
+            <a href="/admin/dashboard.html" class="account-menu-item">Dashboard</a>
+            <a href="/admin/users.html" class="account-menu-item">Manage Users</a>
+            <div style="border-top: 1px solid #f1f5f9; margin: 0.25rem 0;"></div>
+            <div onclick="Auth.logout()" class="account-menu-item" style="color: #ef4444;">Sign Out</div>
+          </div>
+        </div>
+      </header>
+    
+
+      <main class="content-body">
+        <!-- 3 Cards Per Row Grid (Pattern: Color block + big number + small uppercase label + light footer strip) -->
+        <div class="stat-cards-grid">
+          <!-- 1. Total Users (Blue) -->
+          <div class="stat-card stat-card-blue">
+            <div class="stat-card-body">
+              <div id="stat-total-users" class="stat-card-number">--</div>
+              <div class="stat-card-label">TOTAL USERS</div>
+            </div>
+            <div class="stat-card-footer">
+              <a href="/admin/users.html" class="stat-card-link">FULL DETAIL &rarr;</a>
+            </div>
+          </div>
+
+          <!-- 2. Churned Users (Red) -->
+          <div class="stat-card stat-card-red">
+            <div class="stat-card-body">
+              <div id="stat-churned-users" class="stat-card-number">--</div>
+              <div class="stat-card-label">CHURNED USERS</div>
+            </div>
+            <div class="stat-card-footer">
+              <a href="/admin/churned.html" class="stat-card-link">SEE ALL &rarr;</a>
+            </div>
+          </div>
+
+          <!-- 3. Retained Users (Green) -->
+          <div class="stat-card stat-card-green">
+            <div class="stat-card-body">
+              <div id="stat-retained-users" class="stat-card-number">--</div>
+              <div class="stat-card-label">RETAINED USERS</div>
+            </div>
+            <div class="stat-card-footer">
+              <a href="/admin/users.html" class="stat-card-link">SEE ALL &rarr;</a>
+            </div>
+          </div>
+
+          <!-- 4. Churn Rate % (Orange) -->
+          <div class="stat-card stat-card-orange">
+            <div class="stat-card-body">
+              <div id="stat-churn-rate" class="stat-card-number">--%</div>
+              <div class="stat-card-label">CHURN RATE %</div>
+            </div>
+            <div class="stat-card-footer">
+              <a href="/admin/analytics.html" class="stat-card-link">VIEW ANALYTICS &rarr;</a>
+            </div>
+          </div>
+
+          <!-- 5. High Risk Count (Rose) -->
+          <div class="stat-card stat-card-rose">
+            <div class="stat-card-body">
+              <div id="stat-high-risk" class="stat-card-number">--</div>
+              <div class="stat-card-label">HIGH RISK COUNT</div>
+            </div>
+            <div class="stat-card-footer">
+              <a href="/admin/churned.html" class="stat-card-link">INSPECT AT-RISK &rarr;</a>
+            </div>
+          </div>
+
+          <!-- 6. Medium Risk Count (Amber) -->
+          <div class="stat-card stat-card-amber">
+            <div class="stat-card-body">
+              <div id="stat-medium-risk" class="stat-card-number">--</div>
+              <div class="stat-card-label">MEDIUM RISK COUNT</div>
+            </div>
+            <div class="stat-card-footer">
+              <a href="/admin/users.html" class="stat-card-link">SEE ALL &rarr;</a>
+            </div>
+          </div>
+
+          <!-- 7. Active Offers (Teal) -->
+          <div class="stat-card stat-card-teal">
+            <div class="stat-card-body">
+              <div id="stat-active-offers" class="stat-card-number">--</div>
+              <div class="stat-card-label">ACTIVE OFFERS</div>
+            </div>
+            <div class="stat-card-footer">
+              <a href="/admin/offers.html" class="stat-card-link">MANAGE OFFERS &rarr;</a>
+            </div>
+          </div>
+
+          <!-- 8. CSV vs Database Comparison (Indigo) -->
+          <div class="stat-card stat-card-indigo">
+            <div class="stat-card-body">
+              <div id="stat-data-sources" class="stat-card-number" style="font-size: 1.4rem; margin-bottom: 0.6rem;">CSV: <span id="val-csv-count">--</span> | DB: <span id="val-db-count">--</span></div>
+              <div class="stat-card-label">DATASET SOURCE BREAKDOWN</div>
+            </div>
+            <div class="stat-card-footer">
+              <a href="/admin/data.html" class="stat-card-link">DATA SOURCE COMPARISON &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent At-Risk Accounts Table -->
+        <div class="card">
+          <div class="flex justify-between items-center" style="margin-bottom: 1rem;">
+            <div>
+              <h3 class="card-title">Urgent High-Risk Customers</h3>
+              <p class="card-subtitle">Predicted churn probability greater than 65%</p>
+            </div>
+            <a href="/admin/churned.html" class="btn btn-secondary btn-sm">View All Churned &rarr;</a>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Source</th>
+                  <th>Tenure</th>
+                  <th>Satisfaction</th>
+                  <th>Churn Probability</th>
+                  <th>Risk Tier</th>
+                  <th class="text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="dashboard-at-risk-tbody">
+                <tr><td colspan="7" class="text-muted" style="text-align: center; padding: 2rem;">Loading customer data...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/auth.js"></script>
+  <script src="/assets/js/ml-background.js"></script>
+  <script src="/assets/js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 1. Fetch Admin Dashboard Stats
+      const statsRes = await API.get('/api/admin/stats');
+      if (statsRes.success && statsRes.data) {
+        const s = statsRes.data;
+        document.getElementById('stat-total-users').textContent = s.total_users.toLocaleString();
+        document.getElementById('stat-churned-users').textContent = s.churned_users.toLocaleString();
+        document.getElementById('stat-retained-users').textContent = s.retained_users.toLocaleString();
+        document.getElementById('stat-churn-rate').textContent = s.churn_rate_percentage + '%';
+        document.getElementById('stat-high-risk').textContent = s.high_risk_count.toLocaleString();
+        document.getElementById('stat-medium-risk').textContent = s.medium_risk_count.toLocaleString();
+        document.getElementById('stat-active-offers').textContent = s.active_offers_count.toLocaleString();
+      }
+
+      // 2. Fetch Users to compute CSV vs DB and display high-risk accounts
+      const usersRes = await API.get('/api/admin/users?limit=300');
+      if (usersRes.success && Array.isArray(usersRes.data)) {
+        const users = usersRes.data;
+        const csvCount = users.filter(u => u.source === 'csv').length;
+        const dbCount = users.filter(u => u.source === 'database').length;
+        document.getElementById('val-csv-count').textContent = csvCount;
+        document.getElementById('val-db-count').textContent = dbCount;
+
+        // High risk slice
+        const highRisk = users.filter(u => u.risk_level === 'High' || u.churn_probability >= 0.65).slice(0, 5);
+        const tbody = document.getElementById('dashboard-at-risk-tbody');
+        if (highRisk.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #64748b; padding: 2rem;">No high-risk accounts detected.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = '';
+        highRisk.forEach(u => {
+          const prob = Math.round(u.churn_probability * 100);
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>
+              <div class="font-bold" style="color: #0f172a;">${u.email_or_name || 'Customer'}</div>
+              <div class="text-xs text-muted" style="font-family: monospace;">${u.id}</div>
+            </td>
+            <td><span class="badge ${u.source === 'database' ? 'badge-sky' : ''}" style="background: #f1f5f9; color: #475569;">${u.source ? u.source.toUpperCase() : 'DB'}</span></td>
+            <td>${u.tenure || 1} mos</td>
+            <td>${u.satisfaction_score || 3}/5</td>
+            <td><span class="font-bold" style="color: #ef4444;">${prob}%</span></td>
+            <td><span class="badge badge-high">High Risk</span></td>
+            <td class="text-right">
+              <a href="/admin/users.html?search=${encodeURIComponent(u.id)}" class="btn btn-secondary btn-sm">Inspect</a>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Retention Intelligence Platform | Sign In</title>
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body, html {
+      height: 100%;
+      width: 100%;
+      background-color: #ffffff;
+      font-family: var(--font-sans);
+    }
+    .fullscreen-auth {
+      display: flex;
+      min-height: 100vh;
+      width: 100vw;
+    }
+    /* Left Hero / Graphic Pane (Full Height) */
+    .auth-hero-pane {
+      flex: 1;
+      min-width: 420px;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2.5rem;
+      color: #ffffff;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Diagonal Ambient Flow Particles (Bottom-Left to Top-Right) */
+    .hero-flow-bg {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Diagonal Light Sweep Beam */
+    .diagonal-beam {
+      position: absolute;
+      width: 250%;
+      height: 120px;
+      bottom: -150px;
+      left: -150px;
+      background: linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.03) 30%, rgba(255, 255, 255, 0.18) 50%, rgba(255, 255, 255, 0.03) 70%, transparent 100%);
+      transform-origin: center;
+      animation: diagonalLightSweep 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      filter: blur(16px);
+    }
+
+    @keyframes diagonalLightSweep {
+      0% {
+        transform: translate3d(-40%, 40%, 0) rotate(-35deg);
+        opacity: 0;
+      }
+      25% {
+        opacity: 0.85;
+      }
+      75% {
+        opacity: 0.85;
+      }
+      100% {
+        transform: translate3d(60%, -60%, 0) rotate(-35deg);
+        opacity: 0;
+      }
+    }
+
+    /* Floating Glowing Orbs / Stream Particles */
+    .flow-orb {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.08) 60%, transparent 80%);
+      animation: flowBottomLeftToTopRight linear infinite;
+    }
+
+    .flow-orb-1 { width: 140px; height: 140px; bottom: -40px; left: 5%; animation-duration: 9s; animation-delay: 0s; }
+    .flow-orb-2 { width: 85px; height: 85px; bottom: 8%; left: -20px; animation-duration: 7s; animation-delay: 2s; }
+    .flow-orb-3 { width: 50px; height: 50px; bottom: 2%; left: 18%; animation-duration: 6s; animation-delay: 3.5s; }
+    .flow-orb-4 { width: 110px; height: 110px; bottom: -30px; left: 12%; animation-duration: 11s; animation-delay: 1.5s; }
+    .flow-orb-5 { width: 35px; height: 35px; bottom: 15%; left: 0%; animation-duration: 5.5s; animation-delay: 4.5s; }
+    .flow-orb-6 { width: 65px; height: 65px; bottom: -10px; left: 25%; animation-duration: 8s; animation-delay: 5s; }
+
+    @keyframes flowBottomLeftToTopRight {
+      0% {
+        transform: translate3d(0, 0, 0) scale(0.75);
+        opacity: 0;
+      }
+      20% {
+        opacity: 0.55;
+      }
+      75% {
+        opacity: 0.45;
+      }
+      100% {
+        transform: translate3d(560px, -780px, 0) scale(1.4);
+        opacity: 0;
+      }
+    }
+
+    /* Floating Gentle Hover for 3D Illustration */
+    .hero-illustration {
+      max-width: 280px;
+      max-height: 280px;
+      width: 100%;
+      object-fit: contain;
+      margin-bottom: 2rem;
+      filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.2));
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+      animation: levitateIllustration 4.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes levitateIllustration {
+      0% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      100% {
+        transform: translateY(-10px) rotate(1deg);
+      }
+    }
+
+    .hero-title {
+      font-size: 1.85rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+      line-height: 1.25;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-subtitle {
+      font-size: 1rem;
+      color: #e0f2fe;
+      max-width: 400px;
+      line-height: 1.6;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Right Form Pane (Full Height) */
+    .auth-form-pane {
+      flex: 1.15;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 3.5rem 4rem;
+      background-color: #ffffff;
+      overflow-y: auto;
+    }
+    .form-inner-wrapper {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* Switcher Toggle Tabs (User Login -> User Registration -> Admin Login) */
+    .role-switcher-bar {
+      display: flex;
+      background-color: #f1f5f9;
+      border-radius: var(--radius-md);
+      padding: 0.35rem;
+      margin-bottom: 2rem;
+      gap: 0.35rem;
+    }
+    .role-switcher-btn {
+      flex: 1;
+      padding: 0.65rem 1rem;
+      border-radius: var(--radius-sm);
+      border: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+    .role-switcher-btn.active {
+      background-color: #ffffff;
+      color: var(--text-main);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+    .role-switcher-btn#btn-user.active {
+      color: var(--primary-sky);
+    }
+    .role-switcher-btn#btn-register.active {
+      color: #0284c7;
+    }
+    .role-switcher-btn#btn-admin.active {
+      color: #0f172a;
+    }
+
+    .auth-section {
+      display: none;
+    }
+    .auth-section.active {
+      display: block;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 960px) {
+      .fullscreen-auth {
+        flex-direction: column;
+      }
+      .auth-hero-pane {
+        min-width: 100%;
+        padding: 2.5rem 1.5rem;
+      }
+      .hero-illustration {
+        max-width: 180px;
+        max-height: 180px;
+        margin-bottom: 1rem;
+      }
+      .auth-form-pane {
+        padding: 2.5rem 1.5rem;
+      }
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="fullscreen-auth">
+
+    <!-- Left Graphic Hero Pane (Dynamic based on selected tab) -->
+    <div class="auth-hero-pane" id="hero-pane">
+      <!-- Ambient Flowing Background (Bottom-Left to Top-Right) -->
+      <div class="hero-flow-bg">
+        <div class="diagonal-beam"></div>
+        <div class="flow-orb flow-orb-1"></div>
+        <div class="flow-orb flow-orb-2"></div>
+        <div class="flow-orb flow-orb-3"></div>
+        <div class="flow-orb flow-orb-4"></div>
+        <div class="flow-orb flow-orb-5"></div>
+        <div class="flow-orb flow-orb-6"></div>
+      </div>
+
+      <img id="hero-img" class="hero-illustration" src="/assets/images/admin_login.png" alt="Customer Retention">
+      <h2 id="hero-title" class="hero-title">Customer Experience & Rewards</h2>
+      <p id="hero-subtitle" class="hero-subtitle">Sign in to access your retention health diagnostics and unlock exclusive loyalty vouchers.</p>
+    </div>
+
+    <!-- Right Full-Screen Form Area -->
+    <div class="auth-form-pane">
+      <div id="form-container" class="form-inner-wrapper">
+
+        <!-- Top Header & Role Switcher -->
+                <!-- Centered Brand Header -->
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <div style="display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border-radius: 14px; box-shadow: 0 8px 16px -2px rgba(2, 132, 199, 0.35); margin-bottom: 0.75rem;">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+              <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+            </svg>
+          </div>
+          <div style="font-size: 1.85rem; font-weight: 800; color: #0f172a; letter-spacing: -0.02em; line-height: 1.2;">ChurnIQ</div>
+          <div style="font-size: 0.85rem; font-weight: 600; color: #0284c7; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.35rem;">Customer Retention Platform</div>
+        </div>
+
+        <div class="role-switcher-bar">
+          <button type="button" id="btn-user" class="role-switcher-btn active" onclick="switchAuthMode('user')">
+            👤 User Login
+          </button>
+          <button type="button" id="btn-register" class="role-switcher-btn" onclick="switchAuthMode('register')">
+            📝 User Registration
+          </button>
+          <button type="button" id="btn-admin" class="role-switcher-btn" onclick="switchAuthMode('admin')">
+            🛡️ Admin Login
+          </button>
+        </div>
+
+        <!-- ============================================================= -->
+        <!-- 1. USER LOGIN FORM -->
+        <!-- ============================================================= -->
+        <div id="section-user" class="auth-section active">
+          <div style="margin-bottom: 1.5rem;">
+            <h1 style="font-size: 1.6rem; margin-bottom: 0.35rem;">Customer Sign In</h1>
+            <p class="text-sm text-muted">Access your personalized customer account, health score, and exclusive offers.</p>
+          </div>
+
+          <div id="user-err-box" style="display: none; padding: 0.65rem 0.85rem; background-color: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; border-radius: var(--radius-sm); font-size: 0.85rem; margin-bottom: 1.25rem;"></div>
+
+          <form id="user-form">
+            <div class="form-group">
+              <label class="form-label" for="user-email-field">Email Address</label>
+              <input type="email" id="user-email-field" class="form-control" placeholder="user@example.com" required autocomplete="email">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="user-pass-field">Password</label>
+              <input type="password" id="user-pass-field" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+            </div>
+
+            <div style="margin-bottom: 1.25rem;">
+              <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted); cursor: pointer;">
+                <input type="checkbox" id="user-remember-chk" checked style="accent-color: var(--primary-sky);">
+                Remember my login session
+              </label>
+            </div>
+
+            <button type="submit" id="user-submit-button" class="btn btn-primary w-full btn-lg">
+              Sign In to User Portal &rarr;
+            </button>
+          </form>
+
+          <div style="margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--border-light);">
+            <p class="text-sm text-muted">New customer? <a href="javascript:void(0)" onclick="switchAuthMode('register')" class="font-bold">Register an account here</a></p>
+          </div>
+        </div>
+
+        <!-- ============================================================= -->
+        <!-- 2. USER REGISTRATION (ONLY SECTION A) -->
+        <!-- ============================================================= -->
+        <div id="section-register" class="auth-section">
+          <div style="margin-bottom: 1.5rem;">
+            <h1 style="font-size: 1.6rem; margin-bottom: 0.35rem;">Customer Registration</h1>
+            <p class="text-sm text-muted">Create your user account to access the retention intelligence platform.</p>
+          </div>
+
+          <div id="reg-err-box" style="display: none; padding: 0.75rem 1rem; background-color: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; border-radius: var(--radius-sm); font-size: 0.85rem; margin-bottom: 1.25rem;"></div>
+
+          <form id="register-quick-form">
+            <!-- Section A: Account Info ONLY -->
+            <div style="background: #f8fafc; border: 1px solid var(--border-light); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem;">
+              <div style="font-size: 0.8rem; font-weight: 700; color: #0284c7; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.05em;"> Account Credentials</div>
+              
+              <div class="form-group">
+                <label class="form-label" for="reg-name-input">Full Name</label>
+                <input type="text" id="reg-name-input" class="form-control" placeholder="John Doe" required autocomplete="name">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="reg-email-input">Email Address</label>
+                <input type="email" id="reg-email-input" class="form-control" placeholder="john@example.com" required autocomplete="email">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="reg-pass-input">Password (min 6 chars)</label>
+                <input type="password" id="reg-pass-input" class="form-control" placeholder="••••••••" minlength="6" required autocomplete="new-password">
+              </div>
+            </div>
+
+            <button type="submit" id="reg-submit-button" class="btn btn-primary w-full btn-lg">
+              Create Account & Enter Platform &rarr;
+            </button>
+          </form>
+
+          <div style="margin-top: 1.5rem; text-align: center;">
+            <p class="text-sm text-muted">Already have an account? <a href="javascript:void(0)" onclick="switchAuthMode('user')" class="font-bold">Sign in here</a></p>
+          </div>
+        </div>
+
+        <!-- ============================================================= -->
+        <!-- 3. ADMIN LOGIN FORM -->
+        <!-- ============================================================= -->
+        <div id="section-admin" class="auth-section">
+          <div style="margin-bottom: 1.5rem;">
+            <h1 style="font-size: 1.6rem; margin-bottom: 0.35rem;">Administrator Sign In</h1>
+            <p class="text-sm text-muted">Enter administrative credentials to access executive churn intelligence and campaigns.</p>
+          </div>
+
+          <div id="admin-err-box" style="display: none; padding: 0.65rem 0.85rem; background-color: #fee2e2; border: 1px solid #fca5a5; color: #b91c1c; border-radius: var(--radius-sm); font-size: 0.85rem; margin-bottom: 1.25rem;"></div>
+
+          <form id="admin-form">
+            <div class="form-group">
+              <label class="form-label" for="admin-email-field">Administrator Email</label>
+              <input type="email" id="admin-email-field" class="form-control" placeholder="admin@retention.com" value="admin@retention.com" required autocomplete="email">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="admin-pass-field">Administrator Password</label>
+              <input type="password" id="admin-pass-field" class="form-control" placeholder="••••••••" value="Admin@123" required autocomplete="current-password">
+            </div>
+
+            <div style="margin-bottom: 1.25rem;">
+              <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted); cursor: pointer;">
+                <input type="checkbox" id="admin-remember-chk" checked style="accent-color: var(--primary-sky);">
+                Remember admin session
+              </label>
+            </div>
+
+            <button type="submit" id="admin-submit-button" class="btn btn-primary w-full btn-lg" style="background-color: #0f172a;">
+              Sign In to Admin Dashboard &rarr;
+            </button>
+          </form>
+
+          <div style="margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid var(--border-light);">
+            <p class="text-sm text-muted">Customer portal login? <a href="javascript:void(0)" onclick="switchAuthMode('user')" class="font-bold">Switch to User Sign In</a></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/auth.js"></script>
+  <script>
+    const HERO_CONFIGS = {
+      'user': {
+        img: '/assets/images/admin_login.png',
+        title: 'Customer Experience & Rewards',
+        subtitle: 'Sign in to access your retention health diagnostics and unlock exclusive loyalty vouchers.',
+        gradient: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)'
+      },
+      'register': {
+        img: '/assets/images/user_registration.png',
+        title: 'Join ChurnIQ Today',
+        subtitle: 'Create your account to unlock AI-driven churn diagnostics, predictive analytics, and VIP reward offers.',
+        gradient: 'linear-gradient(135deg, #0284c7 0%, #0f766e 100%)'
+      },
+      'admin': {
+        img: '/assets/images/user_login.png',
+        title: 'Executive Retention Command',
+        subtitle: 'Monitor machine learning churn risk across your customer base and launch targeted retention campaigns.',
+        gradient: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)'
+      }
+    };
+
+    function switchAuthMode(mode) {
+      document.querySelectorAll('.role-switcher-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.auth-section').forEach(s => s.classList.remove('active'));
+
+      const btn = document.getElementById('btn-' + mode);
+      const section = document.getElementById('section-' + mode);
+      if (btn) btn.classList.add('active');
+      if (section) section.classList.add('active');
+
+      const cfg = HERO_CONFIGS[mode] || HERO_CONFIGS['user'];
+      const heroPane = document.getElementById('hero-pane');
+      const heroImg = document.getElementById('hero-img');
+      const heroTitle = document.getElementById('hero-title');
+      const heroSubtitle = document.getElementById('hero-subtitle');
+
+      heroPane.style.background = cfg.gradient;
+      heroImg.src = cfg.img;
+      heroTitle.textContent = cfg.title;
+      heroSubtitle.textContent = cfg.subtitle;
+
+      window.location.hash = mode;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '') || 'user';
+      if (hash === 'admin') {
+        switchAuthMode('admin');
+      } else if (hash === 'register') {
+        switchAuthMode('register');
+      } else {
+        switchAuthMode('user');
+      }
+    });
+
+    // 1. User Login Handler
+    document.getElementById('user-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('user-submit-button');
+      const errBox = document.getElementById('user-err-box');
+      errBox.style.display = 'none';
+
+      btn.disabled = true;
+      btn.textContent = 'Signing in to User Portal...';
+
+      const email = document.getElementById('user-email-field').value.trim();
+      const password = document.getElementById('user-pass-field').value;
+      const remember = document.getElementById('user-remember-chk').checked;
+
+      const res = await Auth.login(email, password, remember);
+      btn.disabled = false;
+      btn.textContent = 'Sign In to User Portal →';
+
+      if (res.success) {
+        window.location.href = '/user/dashboard.html';
+      } else {
+        errBox.textContent = res.error || 'Invalid customer email or password.';
+        errBox.style.display = 'block';
+      }
+    });
+
+    // 2. Admin Login Handler
+    document.getElementById('admin-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('admin-submit-button');
+      const errBox = document.getElementById('admin-err-box');
+      errBox.style.display = 'none';
+
+      btn.disabled = true;
+      btn.textContent = 'Signing in to Admin Dashboard...';
+
+      const email = document.getElementById('admin-email-field').value.trim();
+      const password = document.getElementById('admin-pass-field').value;
+      const remember = document.getElementById('admin-remember-chk').checked;
+
+      const res = await Auth.login(email, password, remember);
+      btn.disabled = false;
+      btn.textContent = 'Sign In to Admin Dashboard →';
+
+      if (res.success) {
+        if (res.user.role === 'admin') {
+          window.location.href = '/admin/dashboard.html';
+        } else {
+          errBox.textContent = 'Access Denied: This account is not an Administrator.';
+          errBox.style.display = 'block';
+        }
+      } else {
+        errBox.textContent = res.error || 'Invalid administrator credentials.';
+        errBox.style.display = 'block';
+      }
+    });
+
+    // 3. Register Quick Form Handler (Section A ONLY)
+    document.getElementById('register-quick-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('reg-submit-button');
+      const errBox = document.getElementById('reg-err-box');
+      errBox.style.display = 'none';
+
+      btn.disabled = true;
+      btn.textContent = 'Creating user account...';
+
+      const email = document.getElementById('reg-email-input').value.trim();
+      const password = document.getElementById('reg-pass-input').value;
+      const full_name = document.getElementById('reg-name-input').value.trim();
+
+      const payload = {
+        email,
+        password,
+        full_name,
+        role: 'user'
+      };
+
+      const res = await Auth.register(payload);
+
+      if (res.success) {
+        // Automatically login
+        const loginRes = await Auth.login(email, password);
+        if (loginRes.success) {
+          window.location.href = '/user/dashboard.html';
+        } else {
+          switchAuthMode('user');
+        }
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Create Account & Enter Platform →';
+        errBox.textContent = res.error || 'Registration failed.';
+        errBox.style.display = 'block';
+      }
+    });
+  </script>
+
+</body>
+</html>

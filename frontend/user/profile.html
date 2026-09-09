@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>My Profile | Customer Hub</title>
+  <link rel="stylesheet" href="/assets/css/theme.css?v=3">
+  <style>
+    .user-navbar {
+      background-color: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 4px 20px -2px rgba(2, 132, 199, 0.06);
+    }
+    .brand-container {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      cursor: pointer;
+      text-decoration: none !important;
+    }
+    .brand-logo-box {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #fff;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+      box-shadow: 0 0 10px rgba(2, 132, 199, 0.35);
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .brand-logo-box::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(60deg, transparent 30%, rgba(255, 255, 255, 0.45) 50%, transparent 70%);
+      transform: rotate(25deg);
+      transition: transform 0.6s ease;
+    }
+    .brand-container:hover .brand-logo-box {
+      transform: translateY(-1px) scale(1.08) rotate(2deg);
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.8), 0 0 28px rgba(2, 132, 199, 0.5);
+    }
+    .brand-container:hover .brand-logo-box::after {
+      transform: rotate(25deg) translate(80%, 80%);
+    }
+    .brand-title {
+      font-weight: 800;
+      font-size: 1.08rem;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+      transition: all 0.3s ease;
+    }
+    .brand-container:hover .brand-title {
+      color: #0284c7;
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+    }
+    .user-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .user-nav-link {
+      position: relative;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.92rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      text-decoration: none !important;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: inline-flex;
+      align-items: center;
+      letter-spacing: -0.01em;
+    }
+    .user-nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 50%;
+      width: 0%;
+      height: 2.5px;
+      background: linear-gradient(90deg, #38bdf8, #0284c7);
+      border-radius: 999px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateX(-50%);
+      opacity: 0;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.9), 0 0 14px rgba(2, 132, 199, 0.6);
+    }
+    .user-nav-link:hover {
+      color: #0284c7;
+      background: rgba(2, 132, 199, 0.07);
+      transform: translateY(-1.5px);
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+      box-shadow: 0 2px 8px -2px rgba(2, 132, 199, 0.12);
+    }
+    .user-nav-link:hover::after {
+      width: 75%;
+      opacity: 1;
+    }
+    /* Active Glow Tab */
+    .user-nav-link.active {
+      color: #0284c7 !important;
+      font-weight: 700 !important;
+      background: linear-gradient(180deg, rgba(2, 132, 199, 0.08) 0%, rgba(56, 189, 248, 0.15) 100%) !important;
+      border: 1px solid rgba(56, 189, 248, 0.5) !important;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.22), inset 0 0 8px rgba(56, 189, 248, 0.15) !important;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.5) !important;
+      transform: translateY(0);
+    }
+    .user-nav-link.active::after {
+      content: '' !important;
+      position: absolute !important;
+      bottom: -1px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      width: 75% !important;
+      height: 3px !important;
+      background: linear-gradient(90deg, #38bdf8, #0284c7) !important;
+      border-radius: 9999px !important;
+      opacity: 1 !important;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 1), 0 0 18px rgba(2, 132, 199, 0.75) !important;
+      animation: activeUnderlinePulse 2.4s ease-in-out infinite alternate !important;
+    }
+    @keyframes activeUnderlinePulse {
+      0% {
+        box-shadow: 0 0 8px rgba(56, 189, 248, 0.8), 0 0 16px rgba(2, 132, 199, 0.6);
+        opacity: 0.9;
+      }
+      50% {
+        box-shadow: 0 0 14px rgba(56, 189, 248, 1), 0 0 24px rgba(14, 165, 233, 0.95), 0 0 35px rgba(2, 132, 199, 0.7);
+        opacity: 1;
+      }
+      100% {
+        box-shadow: 0 0 8px rgba(56, 189, 248, 0.8), 0 0 16px rgba(2, 132, 199, 0.6);
+        opacity: 0.9;
+      }
+    }
+    #user-greeting {
+      transition: all 0.3s ease;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+    }
+    #user-greeting:hover {
+      color: #0284c7 !important;
+      background: rgba(2, 132, 199, 0.08);
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+    }
+    .user-container { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem 3rem; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar with Churn Prediction Button -->
+  <nav class="user-navbar">
+    <div class="flex items-center gap-4">
+      <a href="/user/dashboard.html" class="brand-container">
+        <div class="brand-logo-box">CQ</div>
+        <span class="brand-title">Customer Hub</span>
+      </a>
+      <div class="user-nav-links" style="margin-left: 1.75rem;">
+        <a href="/user/dashboard.html?v=5" class="user-nav-link">Dashboard</a>
+        <a href="/user/prediction.html?v=5" class="user-nav-link">Churn Prediction</a>
+        <a href="/user/profile.html?v=5" class="user-nav-link active">My Profile</a>
+        <a href="/user/offers.html?v=5" class="user-nav-link">My Offers</a>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <span id="user-greeting" class="text-sm font-bold" style="color: var(--text-main);">nakrani</span>
+      <button onclick="Auth.logout()" class="btn btn-secondary btn-sm">Sign Out</button>
+    </div>
+  </nav>
+
+  <main class="user-container">
+    <div style="margin-bottom: 1.5rem;">
+      <h1 style="font-size: 2.15rem; font-weight: 700; color: #0f172a; letter-spacing: -0.035em; margin-bottom: 0.45rem;">
+        Manage Customer Profile
+      </h1>
+      <p class="text-muted" style="font-size: 0.98rem;">
+        Update customer profile signals to dynamically recalculate churn risk score.
+      </p>
+    </div>
+
+    <div id="save-success-alert" style="display: none; padding: 0.75rem 1rem; background-color: #dcfce7; border: 1px solid #86efac; color: #15803d; border-radius: var(--radius-md); font-size: 0.875rem; margin-bottom: 1rem;">
+      Profile updated successfully! ML risk predictions have been recalculated.
+    </div>
+
+    <div class="card">
+      <form id="edit-profile-form">
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="p-tenure">Tenure (Months)</label>
+            <input type="number" id="p-tenure" class="form-control" step="0.5" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="p-device">Preferred Login Device</label>
+            <select id="p-device" class="form-select" required>
+              <option value="Mobile Phone">Mobile Phone</option>
+              <option value="Phone">Phone</option>
+              <option value="Computer">Computer</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="p-city-tier">City Tier</label>
+            <select id="p-city-tier" class="form-select" required>
+              <option value="1">Tier 1</option>
+              <option value="2">Tier 2</option>
+              <option value="3">Tier 3</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="p-warehouse">Warehouse Distance (km)</label>
+            <input type="number" id="p-warehouse" class="form-control" step="0.5" required>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="p-payment">Preferred Payment Mode</label>
+            <select id="p-payment" class="form-select" required>
+              <option value="Credit Card">Credit Card</option>
+              <option value="Debit Card">Debit Card</option>
+              <option value="E wallet">E-Wallet</option>
+              <option value="UPI">UPI</option>
+              <option value="COD">COD</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="p-satisfaction">Satisfaction Score (1-5)</label>
+            <select id="p-satisfaction" class="form-select" required>
+              <option value="5">5 - Very Satisfied</option>
+              <option value="4">4 - Satisfied</option>
+              <option value="3">3 - Neutral</option>
+              <option value="2">2 - Dissatisfied</option>
+              <option value="1">1 - Very Dissatisfied</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="p-complain">Filed a Complaint?</label>
+            <select id="p-complain" class="form-select" required>
+              <option value="0">No (0)</option>
+              <option value="1">Yes (1)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="p-hours">Hours on App / Week</label>
+            <input type="number" id="p-hours" class="form-control" step="0.5" required>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="p-devices-count">Registered Devices</label>
+            <input type="number" id="p-devices-count" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="p-category">Order Category</label>
+            <select id="p-category" class="form-select" required>
+              <option value="Laptop & Accessory">Laptop & Accessory</option>
+              <option value="Mobile Phone">Mobile Phone</option>
+              <option value="Fashion">Fashion</option>
+              <option value="Grocery">Grocery</option>
+              <option value="Others">Others</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="p-marital">Marital Status</label>
+            <select id="p-marital" class="form-select" required>
+              <option value="Single">Single</option>
+              <option value="Married">Married</option>
+              <option value="Divorced">Divorced</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="p-gender">Gender</label>
+            <select id="p-gender" class="form-select" required>
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="p-coupons">Coupons Used</label>
+            <input type="number" id="p-coupons" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="p-orders">Order Count</label>
+            <input type="number" id="p-orders" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="p-days">Days Since Last Order</label>
+            <input type="number" id="p-days" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="p-cashback">Cashback Amount ($)</label>
+            <input type="number" id="p-cashback" class="form-control" step="1" required>
+          </div>
+        </div>
+
+        <div style="margin-top: 1.5rem;">
+          <button type="submit" id="save-profile-btn" class="btn btn-primary btn-lg">
+            Save Changes & Re-evaluate Churn Risk
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/auth.js"></script>
+  <script src="/assets/js/ml-background.js"></script>
+  <script>
+    // Dynamic Active Glow Tab - Automatically illuminates current tab based on URL path
+    function syncActiveTab() {
+      try {
+        const path = window.location.pathname.toLowerCase();
+        document.querySelectorAll('.user-nav-link').forEach(link => {
+          const href = (link.getAttribute('href') || '').toLowerCase();
+          const page = href.split('/').pop().split('?')[0];
+          const isCurrent = path.endsWith(page) || 
+                           (page === 'dashboard.html' && (path === '/user' || path === '/user/' || path.endsWith('/user/dashboard.html')));
+          if (isCurrent) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    syncActiveTab();
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      syncActiveTab();
+      if (!Auth.requireAuth('user')) return;
+
+      const user = Auth.getUser();
+      if (user) {
+        const userName = user.name || user.email || 'nakrani';
+        const greetingEl = document.getElementById('user-greeting');
+        if (greetingEl) greetingEl.textContent = userName;
+      }
+
+      const res = await API.get('/api/users/profile');
+      if (res.success && res.data) {
+        const p = res.data;
+        document.getElementById('p-tenure').value = p.tenure ?? 1;
+        document.getElementById('p-device').value = p.preferred_login_device ?? 'Mobile Phone';
+        document.getElementById('p-city-tier').value = p.city_tier ?? 1;
+        document.getElementById('p-warehouse').value = p.warehouse_to_home ?? 10;
+        document.getElementById('p-payment').value = p.preferred_payment_mode ?? 'Credit Card';
+        document.getElementById('p-satisfaction').value = p.satisfaction_score ?? 3;
+        document.getElementById('p-complain').value = p.complain ?? 0;
+        document.getElementById('p-hours').value = p.hour_spend_on_app ?? 3;
+        document.getElementById('p-devices-count').value = p.number_of_device_registered ?? 3;
+        document.getElementById('p-category').value = p.prefered_order_cat ?? 'Laptop & Accessory';
+        document.getElementById('p-marital').value = p.marital_status ?? 'Single';
+        document.getElementById('p-gender').value = p.gender ?? 'Female';
+        document.getElementById('p-coupons').value = p.coupon_used ?? 1;
+        document.getElementById('p-orders').value = p.order_count ?? 2;
+        document.getElementById('p-days').value = p.day_since_last_order ?? 5;
+        document.getElementById('p-cashback').value = p.cashback_amount ?? 150;
+      }
+    });
+
+    document.getElementById('edit-profile-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('save-profile-btn');
+      const alertBox = document.getElementById('save-success-alert');
+
+      btn.disabled = true;
+      btn.textContent = 'Saving & predicting with ML model...';
+
+      const payload = {
+        tenure: parseFloat(document.getElementById('p-tenure').value),
+        preferred_login_device: document.getElementById('p-device').value,
+        city_tier: parseInt(document.getElementById('p-city-tier').value, 10),
+        warehouse_to_home: parseFloat(document.getElementById('p-warehouse').value),
+        preferred_payment_mode: document.getElementById('p-payment').value,
+        gender: document.getElementById('p-gender').value,
+        hour_spend_on_app: parseFloat(document.getElementById('p-hours').value),
+        number_of_device_registered: parseInt(document.getElementById('p-devices-count').value, 10),
+        prefered_order_cat: document.getElementById('p-category').value,
+        satisfaction_score: parseInt(document.getElementById('p-satisfaction').value, 10),
+        marital_status: document.getElementById('p-marital').value,
+        number_of_address: 2,
+        complain: parseInt(document.getElementById('p-complain').value, 10),
+        order_amount_hike_from_last_year: 15.0,
+        coupon_used: parseFloat(document.getElementById('p-coupons').value),
+        order_count: parseFloat(document.getElementById('p-orders').value),
+        day_since_last_order: parseFloat(document.getElementById('p-days').value),
+        cashback_amount: parseFloat(document.getElementById('p-cashback').value)
+      };
+
+      const res = await API.put('/api/users/profile', payload);
+      btn.disabled = false;
+      btn.textContent = 'Save Changes & Re-evaluate Churn Risk';
+
+      if (res.success) {
+        alertBox.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        alert('Failed to update profile: ' + (res.error || 'Server error'));
+      }
+    });
+  </script>
+
+</body>
+</html>

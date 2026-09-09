@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Users | ChurnIQ Admin</title>
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/sidebar.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">CQ</div>
+        <div class="sidebar-brand-name">ChurnIQ</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-group-label">Main</div>
+        <a href="/admin/dashboard.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Dashboard
+        </a>
+        <a href="/admin/users.html" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          All Users
+        </a>
+        <a href="/admin/churned.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="9" x2="12" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+          Churned Users
+        </a>
+        <a href="/admin/offers.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Offers & Vouchers
+        </a>
+        <a href="/admin/data.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+          Customer Data (CSV/DB)
+        </a>
+        <a href="/admin/analytics.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Churn Analytics
+        </a>
+
+        <div class="nav-group-label" style="margin-top: 1.5rem;">Shortcuts</div>
+        <a href="/user/dashboard.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          User Portal View
+        </a>
+      </nav>
+    </aside>
+    
+
+    <div class="main-wrapper">
+
+      <header class="top-bar">
+        <h1 class="page-title">All Users Explorer</h1>
+        <div class="account-dropdown-wrapper">
+          <button id="account-dropdown-btn" class="account-btn">
+            <div id="admin-avatar-char" class="avatar-circle">A</div>
+            <span id="admin-display-name">Administrator</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">&#9660;</span>
+          </button>
+          <div id="account-dropdown-menu" class="account-menu">
+            <a href="/admin/dashboard.html" class="account-menu-item">Dashboard</a>
+            <a href="/admin/users.html" class="account-menu-item">Manage Users</a>
+            <div style="border-top: 1px solid #f1f5f9; margin: 0.25rem 0;"></div>
+            <div onclick="Auth.logout()" class="account-menu-item" style="color: #ef4444;">Sign Out</div>
+          </div>
+        </div>
+      </header>
+    
+
+      <main class="content-body">
+        <!-- Filters Toolbar -->
+        <div class="card" style="padding: 1rem; margin-bottom: 1.25rem;">
+          <div class="flex justify-between items-center" style="flex-wrap: wrap; gap: 0.75rem;">
+            <div style="flex: 1; min-width: 250px;">
+              <input type="text" id="user-search-input" class="form-control" placeholder="Search by name, email, or ID...">
+            </div>
+            <div class="flex gap-2">
+              <select id="source-filter" class="form-select" style="width: auto; min-width: 140px;">
+                <option value="ALL">All Sources</option>
+                <option value="DATABASE">Live Database</option>
+                <option value="CSV">Historical CSV</option>
+              </select>
+              <select id="risk-filter" class="form-select" style="width: auto; min-width: 140px;">
+                <option value="ALL">All Risk Levels</option>
+                <option value="HIGH">High Risk</option>
+                <option value="MEDIUM">Medium Risk</option>
+                <option value="LOW">Low Risk</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="card">
+          <div class="flex justify-between items-center" style="margin-bottom: 0.75rem;">
+            <span id="user-total-count" class="text-sm font-bold text-muted">Loading user dataset...</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Customer Profile</th>
+                  <th>Source</th>
+                  <th>Tenure</th>
+                  <th>Satisfaction</th>
+                  <th>Complaints</th>
+                  <th>Risk Level</th>
+                  <th class="text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="all-users-tbody">
+                <tr><td colspan="7" class="text-muted" style="text-align: center; padding: 2.5rem;">Loading user records from FastAPI...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- User Detail Modal -->
+  <div id="user-detail-modal" class="modal-overlay">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="modal-cust-name">Customer Profile Detail</h3>
+        <button onclick="closeDetailModal()" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="flex justify-between items-center" style="margin-bottom: 1rem;">
+          <div>
+            <div id="modal-cust-id" style="font-family: monospace; font-size: 0.8rem; color: #64748b;">ID: --</div>
+            <div id="modal-cust-email" style="font-size: 0.85rem; color: #334155;">--</div>
+          </div>
+          <span id="modal-risk-badge" class="badge badge-low">Low Risk</span>
+        </div>
+
+        <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 1rem; margin-bottom: 1rem;">
+          <div class="flex justify-between items-center" style="margin-bottom: 0.35rem;">
+            <span class="text-sm font-bold">Predicted Churn Probability:</span>
+            <span id="modal-prob-val" class="font-bold" style="font-size: 1.1rem; color: #ef4444;">0%</span>
+          </div>
+        </div>
+
+        <h4 style="margin-bottom: 0.5rem;">ML Explainability (Churn Reasons):</h4>
+        <ul id="modal-reasons-list" style="padding-left: 1.25rem; font-size: 0.85rem; color: #334155; margin-bottom: 1rem;">
+          <li>Standard usage parameters.</li>
+        </ul>
+
+        <h4 style="margin-bottom: 0.5rem;">Assigned Retention Offers:</h4>
+        <div id="modal-assigned-offers" style="font-size: 0.85rem; background: #e0f2fe; color: #0369a1; padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem;">
+          No active offer assigned.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="modal-assign-btn" class="btn btn-primary btn-sm">Assign New Offer</button>
+        <button onclick="closeDetailModal()" class="btn btn-secondary btn-sm">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/auth.js"></script>
+  <script src="/assets/js/ml-background.js"></script>
+  <script src="/assets/js/admin.js"></script>
+  <script>
+    let allUsers = [];
+    let filteredUsers = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadUsers();
+      setupFilters();
+    });
+
+    async function loadUsers() {
+      const res = await API.get('/api/admin/users?limit=500');
+      if (res.success && Array.isArray(res.data)) {
+        allUsers = res.data;
+        filteredUsers = [...allUsers];
+        renderTable();
+      }
+    }
+
+    function renderTable() {
+      const countEl = document.getElementById('user-total-count');
+      const tbody = document.getElementById('all-users-tbody');
+
+      countEl.textContent = `Displaying ${filteredUsers.length} Customers`;
+
+      if (filteredUsers.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; padding: 3rem; color: #64748b;">No customer records match your filter criteria.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = '';
+      filteredUsers.forEach(u => {
+        const prob = Math.round((u.churn_probability || 0) * 100);
+        const level = u.risk_level || (prob >= 65 ? 'High' : (prob >= 35 ? 'Medium' : 'Low'));
+        const badgeClass = level === 'High' ? 'badge-high' : (level === 'Medium' ? 'badge-medium' : 'badge-low');
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <div class="font-bold" style="color: #0f172a;">${u.email_or_name || 'Customer'}</div>
+            <div class="text-xs text-muted" style="font-family: monospace;">${u.id}</div>
+          </td>
+          <td><span class="badge" style="background: #f1f5f9; color: #475569;">${(u.source || 'db').toUpperCase()}</span></td>
+          <td>${u.tenure || 1} mos</td>
+          <td>${u.satisfaction_score || 3}/5</td>
+          <td>${u.complain === 1 ? '<span style="color: #ef4444; font-weight: 700;">Yes (1)</span>' : 'No (0)'}</td>
+          <td><span class="badge ${badgeClass}">${level} Risk (${prob}%)</span></td>
+          <td class="text-right">
+            <button class="btn btn-secondary btn-sm" onclick="viewUserDetail('${u.id}')">View Detail</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function setupFilters() {
+      const searchInput = document.getElementById('user-search-input');
+      const sourceFilter = document.getElementById('source-filter');
+      const riskFilter = document.getElementById('risk-filter');
+
+      const apply = () => {
+        const query = searchInput.value.toLowerCase().trim();
+        const src = sourceFilter.value;
+        const risk = riskFilter.value;
+
+        filteredUsers = allUsers.filter(u => {
+          const nameMatch = (u.email_or_name || '').toLowerCase().includes(query) || String(u.id).toLowerCase().includes(query);
+          const srcMatch = src === 'ALL' || (u.source || 'database').toUpperCase() === src;
+          const riskMatch = risk === 'ALL' || (u.risk_level || 'Low').toUpperCase() === risk;
+          return nameMatch && srcMatch && riskMatch;
+        });
+        renderTable();
+      };
+
+      searchInput.addEventListener('input', apply);
+      sourceFilter.addEventListener('change', apply);
+      riskFilter.addEventListener('change', apply);
+    }
+
+    function viewUserDetail(userId) {
+      const u = allUsers.find(x => String(x.id) === String(userId));
+      if (!u) return;
+
+      document.getElementById('modal-cust-name').textContent = u.email_or_name || 'Customer Profile';
+      document.getElementById('modal-cust-id').textContent = 'Identifier: ' + u.id;
+      document.getElementById('modal-cust-email').textContent = 'Source: ' + (u.source || 'Live DB');
+
+      const prob = Math.round((u.churn_probability || 0) * 100);
+      document.getElementById('modal-prob-val').textContent = prob + '%';
+
+      const badge = document.getElementById('modal-risk-badge');
+      badge.className = 'badge ' + (u.risk_level === 'High' ? 'badge-high' : (u.risk_level === 'Medium' ? 'badge-medium' : 'badge-low'));
+      badge.textContent = (u.risk_level || 'Low') + ' Risk';
+
+      const reasonsList = document.getElementById('modal-reasons-list');
+      if (u.churn_reasons && u.churn_reasons.length > 0) {
+        reasonsList.innerHTML = u.churn_reasons.map(r => `<li>${r}</li>`).join('');
+      } else {
+        reasonsList.innerHTML = '<li>Standard customer usage profile.</li>';
+      }
+
+      const offersBox = document.getElementById('modal-assigned-offers');
+      if (u.assigned_offers && u.assigned_offers.length > 0) {
+        offersBox.textContent = u.assigned_offers.join(', ');
+      } else {
+        offersBox.textContent = 'No retention offer currently assigned.';
+      }
+
+      document.getElementById('modal-assign-btn').onclick = () => {
+        window.location.href = `/admin/offers.html?user_id=${encodeURIComponent(u.customer_id || u.id)}`;
+      };
+
+      document.getElementById('user-detail-modal').classList.add('active');
+    }
+
+    function closeDetailModal() {
+      document.getElementById('user-detail-modal').classList.remove('active');
+    }
+  </script>
+
+</body>
+</html>

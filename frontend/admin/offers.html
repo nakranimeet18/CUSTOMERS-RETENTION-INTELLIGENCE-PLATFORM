@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retention Offers Management | ChurnIQ Admin</title>
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/sidebar.css">
+  <style>
+    .offers-admin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+    .offer-admin-card {
+      background-color: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-wrapper">
+
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">CQ</div>
+        <div class="sidebar-brand-name">ChurnIQ</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-group-label">Main</div>
+        <a href="/admin/dashboard.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Dashboard
+        </a>
+        <a href="/admin/users.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          All Users
+        </a>
+        <a href="/admin/churned.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="9" x2="12" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+          Churned Users
+        </a>
+        <a href="/admin/offers.html" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Offers & Vouchers
+        </a>
+        <a href="/admin/data.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+          Customer Data (CSV/DB)
+        </a>
+        <a href="/admin/analytics.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Churn Analytics
+        </a>
+
+        <div class="nav-group-label" style="margin-top: 1.5rem;">Shortcuts</div>
+        <a href="/user/dashboard.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          User Portal View
+        </a>
+      </nav>
+    </aside>
+    
+
+    <div class="main-wrapper">
+
+      <header class="top-bar">
+        <h1 class="page-title">Retention Offers & Campaigns</h1>
+        <div class="account-dropdown-wrapper">
+          <button id="account-dropdown-btn" class="account-btn">
+            <div id="admin-avatar-char" class="avatar-circle">A</div>
+            <span id="admin-display-name">Administrator</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">&#9660;</span>
+          </button>
+          <div id="account-dropdown-menu" class="account-menu">
+            <a href="/admin/dashboard.html" class="account-menu-item">Dashboard</a>
+            <a href="/admin/users.html" class="account-menu-item">Manage Users</a>
+            <div style="border-top: 1px solid #f1f5f9; margin: 0.25rem 0;"></div>
+            <div onclick="Auth.logout()" class="account-menu-item" style="color: #ef4444;">Sign Out</div>
+          </div>
+        </div>
+      </header>
+    
+
+      <main class="content-body">
+        <div class="flex justify-between items-center" style="margin-bottom: 1.5rem;">
+          <div>
+            <h2 style="font-size: 1.25rem;">Active Retention Campaigns</h2>
+            <p class="text-sm text-muted">Create and target promotional vouchers to at-risk customer tiers.</p>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="openAssignModal()" class="btn btn-secondary btn-sm">Assign Offer to User</button>
+            <button onclick="openCreateModal()" class="btn btn-primary btn-sm">+ Create New Offer</button>
+          </div>
+        </div>
+
+        <div class="offers-admin-grid" id="offers-admin-container">
+          <div class="text-muted" style="padding: 2rem 0;">Loading offers...</div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Create Offer Modal -->
+  <div id="create-offer-modal" class="modal-overlay">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Create New Retention Offer</h3>
+        <button onclick="closeCreateModal()" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <form id="create-offer-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="new-offer-title">Offer Title</label>
+            <input type="text" id="new-offer-title" class="form-control" placeholder="e.g. VIP Priority Support & 15% Refund" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-offer-desc">Description</label>
+            <textarea id="new-offer-desc" class="form-control" rows="3" placeholder="Explain the retention incentive and terms..." required></textarea>
+          </div>
+
+          <div class="flex gap-3">
+            <div class="form-group flex-1">
+              <label class="form-label" for="new-offer-discount">Discount Percentage (%)</label>
+              <input type="number" id="new-offer-discount" class="form-control" min="0" max="100" value="15" required>
+            </div>
+            <div class="form-group flex-1">
+              <label class="form-label" for="new-offer-target">Target Risk Segment</label>
+              <select id="new-offer-target" class="form-select" required>
+                <option value="All">All Customers</option>
+                <option value="High" selected>High Risk</option>
+                <option value="Medium">Medium Risk</option>
+                <option value="Low">Low Risk</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="new-offer-code">Voucher / Promo Code</label>
+            <input type="text" id="new-offer-code" class="form-control" placeholder="e.g. RETENTION15" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" onclick="closeCreateModal()" class="btn btn-secondary">Cancel</button>
+          <button type="submit" id="create-submit-btn" class="btn btn-primary">Publish Offer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Assign Offer Modal -->
+  <div id="assign-offer-modal" class="modal-overlay">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Assign Retention Offer to User</h3>
+        <button onclick="closeAssignModal()" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <form id="assign-offer-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label" for="assign-user-id">Target Database User ID</label>
+            <input type="number" id="assign-user-id" class="form-control" placeholder="e.g. 1" min="1" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="assign-offer-select">Select Offer</label>
+            <select id="assign-offer-select" class="form-select" required>
+              <option value="">Loading available offers...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="assign-notes">Internal Notes (Optional)</label>
+            <input type="text" id="assign-notes" class="form-control" placeholder="e.g. Assigned after customer service escalation">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" onclick="closeAssignModal()" class="btn btn-secondary">Cancel</button>
+          <button type="submit" id="assign-submit-btn" class="btn btn-primary">Assign Offer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/auth.js"></script>
+  <script src="/assets/js/ml-background.js"></script>
+  <script src="/assets/js/admin.js"></script>
+  <script>
+    let offers = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadOffers();
+
+      // Check if user_id query param is present
+      const urlParams = new URLSearchParams(window.location.search);
+      const uid = urlParams.get('user_id');
+      if (uid) {
+        const numericId = parseInt(uid.replace(/\D/g, ''), 10);
+        if (numericId) {
+          openAssignModal(numericId);
+        }
+      }
+    });
+
+    async function loadOffers() {
+      const container = document.getElementById('offers-admin-container');
+      const selectEl = document.getElementById('assign-offer-select');
+
+      const res = await API.get('/api/admin/offers');
+      if (res.success && Array.isArray(res.data)) {
+        offers = res.data;
+
+        // Render Cards
+        container.innerHTML = '';
+        selectEl.innerHTML = '<option value="">-- Choose an offer --</option>';
+
+        offers.forEach(o => {
+          const card = document.createElement('div');
+          card.className = 'offer-admin-card';
+          const target = o.target_risk || 'All';
+          const badgeClass = target === 'High' ? 'badge-high' : (target === 'Medium' ? 'badge-medium' : 'badge-sky');
+
+          card.innerHTML = `
+            <div>
+              <div class="flex justify-between items-center" style="margin-bottom: 0.5rem;">
+                <span class="badge ${badgeClass}">Target: ${target} Risk</span>
+                <span class="text-xs text-muted">ID #${o.id}</span>
+              </div>
+              <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem;">${o.title}</h3>
+              <p class="text-sm text-muted" style="margin-bottom: 1rem;">${o.description}</p>
+              <div style="font-size: 1.25rem; font-weight: 700; color: #0284c7; margin-bottom: 0.5rem;">
+                ${o.discount_percentage}% OFF
+              </div>
+            </div>
+
+            <div style="padding-top: 1rem; border-top: 1px solid var(--border-light);" class="flex justify-between items-center">
+              <span style="font-family: monospace; font-weight: 700; background: #f1f5f9; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">${o.voucher_code || 'VOUCHER'}</span>
+              <button onclick="openAssignModal(null, ${o.id})" class="btn btn-secondary btn-sm">Assign</button>
+            </div>
+          `;
+          container.appendChild(card);
+
+          // Add to select
+          const opt = document.createElement('option');
+          opt.value = o.id;
+          opt.textContent = `${o.title} (${o.discount_percentage}% Off - ${o.voucher_code})`;
+          selectEl.appendChild(opt);
+        });
+      }
+    }
+
+    function openCreateModal() { document.getElementById('create-offer-modal').classList.add('active'); }
+    function closeCreateModal() { document.getElementById('create-offer-modal').classList.remove('active'); }
+
+    function openAssignModal(userId = null, offerId = null) {
+      if (userId) document.getElementById('assign-user-id').value = userId;
+      if (offerId) document.getElementById('assign-offer-select').value = offerId;
+      document.getElementById('assign-offer-modal').classList.add('active');
+    }
+    function closeAssignModal() { document.getElementById('assign-offer-modal').classList.remove('active'); }
+
+    document.getElementById('create-offer-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        title: document.getElementById('new-offer-title').value.trim(),
+        description: document.getElementById('new-offer-desc').value.trim(),
+        discount_percentage: parseFloat(document.getElementById('new-offer-discount').value),
+        target_risk: document.getElementById('new-offer-target').value,
+        voucher_code: document.getElementById('new-offer-code').value.trim().toUpperCase(),
+        is_active: true
+      };
+
+      const res = await API.post('/api/admin/offers', payload);
+      if (res.success) {
+        closeCreateModal();
+        document.getElementById('create-offer-form').reset();
+        await loadOffers();
+        alert('Retention offer created successfully!');
+      } else {
+        alert('Failed to create offer: ' + (res.error || 'Server error'));
+      }
+    });
+
+    document.getElementById('assign-offer-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = {
+        user_id: parseInt(document.getElementById('assign-user-id').value, 10),
+        offer_id: parseInt(document.getElementById('assign-offer-select').value, 10),
+        notes: document.getElementById('assign-notes').value.trim() || 'Assigned by Administrator'
+      };
+
+      const res = await API.post('/api/admin/assign-offer', payload);
+      if (res.success) {
+        closeAssignModal();
+        alert('Offer successfully assigned to user ID ' + payload.user_id);
+      } else {
+        alert('Failed to assign offer: ' + (res.error || 'User not found in DB'));
+      }
+    });
+  </script>
+
+</body>
+</html>

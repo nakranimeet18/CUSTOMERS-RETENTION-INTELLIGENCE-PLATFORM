@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>My Offers | Customer Hub</title>
+  <link rel="stylesheet" href="/assets/css/theme.css?v=3">
+  <style>
+    .user-navbar {
+      background-color: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 4px 20px -2px rgba(2, 132, 199, 0.06);
+    }
+    .brand-container {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      cursor: pointer;
+      text-decoration: none !important;
+    }
+    .brand-logo-box {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #fff;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+      box-shadow: 0 0 10px rgba(2, 132, 199, 0.35);
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .brand-logo-box::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(60deg, transparent 30%, rgba(255, 255, 255, 0.45) 50%, transparent 70%);
+      transform: rotate(25deg);
+      transition: transform 0.6s ease;
+    }
+    .brand-container:hover .brand-logo-box {
+      transform: translateY(-1px) scale(1.08) rotate(2deg);
+      box-shadow: 0 0 18px rgba(56, 189, 248, 0.8), 0 0 28px rgba(2, 132, 199, 0.5);
+    }
+    .brand-container:hover .brand-logo-box::after {
+      transform: rotate(25deg) translate(80%, 80%);
+    }
+    .brand-title {
+      font-weight: 800;
+      font-size: 1.08rem;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+      transition: all 0.3s ease;
+    }
+    .brand-container:hover .brand-title {
+      color: #0284c7;
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+    }
+    .user-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .user-nav-link {
+      position: relative;
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.92rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      text-decoration: none !important;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: inline-flex;
+      align-items: center;
+      letter-spacing: -0.01em;
+    }
+    .user-nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 50%;
+      width: 0%;
+      height: 2.5px;
+      background: linear-gradient(90deg, #38bdf8, #0284c7);
+      border-radius: 999px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: translateX(-50%);
+      opacity: 0;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.9), 0 0 14px rgba(2, 132, 199, 0.6);
+    }
+    .user-nav-link:hover {
+      color: #0284c7;
+      background: rgba(2, 132, 199, 0.07);
+      transform: translateY(-1.5px);
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
+      box-shadow: 0 2px 8px -2px rgba(2, 132, 199, 0.12);
+    }
+    .user-nav-link:hover::after {
+      width: 75%;
+      opacity: 1;
+    }
+    /* Active Glow Tab */
+    .user-nav-link.active {
+      color: #0284c7 !important;
+      font-weight: 700 !important;
+      background: linear-gradient(180deg, rgba(2, 132, 199, 0.08) 0%, rgba(56, 189, 248, 0.15) 100%) !important;
+      border: 1px solid rgba(56, 189, 248, 0.5) !important;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.22), inset 0 0 8px rgba(56, 189, 248, 0.15) !important;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.5) !important;
+      transform: translateY(0);
+    }
+    .user-nav-link.active::after {
+      content: '' !important;
+      position: absolute !important;
+      bottom: -1px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      width: 75% !important;
+      height: 3px !important;
+      background: linear-gradient(90deg, #38bdf8, #0284c7) !important;
+      border-radius: 9999px !important;
+      opacity: 1 !important;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 1), 0 0 18px rgba(2, 132, 199, 0.75) !important;
+      animation: activeUnderlinePulse 2.4s ease-in-out infinite alternate !important;
+    }
+    @keyframes activeUnderlinePulse {
+      0% {
+        box-shadow: 0 0 8px rgba(56, 189, 248, 0.8), 0 0 16px rgba(2, 132, 199, 0.6);
+        opacity: 0.9;
+      }
+      50% {
+        box-shadow: 0 0 14px rgba(56, 189, 248, 1), 0 0 24px rgba(14, 165, 233, 0.95), 0 0 35px rgba(2, 132, 199, 0.7);
+        opacity: 1;
+      }
+      100% {
+        box-shadow: 0 0 8px rgba(56, 189, 248, 0.8), 0 0 16px rgba(2, 132, 199, 0.6);
+        opacity: 0.9;
+      }
+    }
+    #user-greeting {
+      transition: all 0.3s ease;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+    }
+    #user-greeting:hover {
+      color: #0284c7 !important;
+      background: rgba(2, 132, 199, 0.08);
+      text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+    }
+    .user-container { max-width: 1080px; margin: 2rem auto; padding: 0 1.5rem; }
+    .offers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+    .user-offer-card {
+      background-color: #ffffff;
+      border: 1px solid var(--border-light);
+      border-top: 3px solid var(--primary-sky);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .user-offer-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px -4px rgba(2, 132, 199, 0.15), 0 4px 6px -2px rgba(0,0,0,0.05);
+      border-top-color: #38bdf8;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Bar with Churn Prediction Button -->
+  <nav class="user-navbar">
+    <div class="flex items-center gap-4">
+      <a href="/user/dashboard.html" class="brand-container">
+        <div class="brand-logo-box">CQ</div>
+        <span class="brand-title">Customer Hub</span>
+      </a>
+      <div class="user-nav-links" style="margin-left: 1.75rem;">
+        <a href="/user/dashboard.html?v=5" class="user-nav-link">Dashboard</a>
+        <a href="/user/prediction.html?v=5" class="user-nav-link">Churn Prediction</a>
+        <a href="/user/profile.html?v=5" class="user-nav-link">My Profile</a>
+        <a href="/user/offers.html?v=5" class="user-nav-link active">My Offers</a>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <span id="user-greeting" class="text-sm font-bold" style="color: var(--text-main);">nakrani</span>
+      <button onclick="Auth.logout()" class="btn btn-secondary btn-sm">Sign Out</button>
+    </div>
+  </nav>
+
+  <main class="user-container">
+    <div style="margin-bottom: 1.75rem;">
+      <h1 style="font-size: 2.15rem; font-weight: 700; color: #0f172a; letter-spacing: -0.035em; margin-bottom: 0.45rem;">
+        My Retention & Loyalty Offers
+      </h1>
+    </div>
+
+    <div class="offers-grid" id="user-offers-container">
+      <div class="text-muted" style="padding: 2rem 0;">Loading your available offers...</div>
+    </div>
+  </main>
+
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/auth.js"></script>
+  <script src="/assets/js/ml-background.js"></script>
+  <script>
+    // Dynamic Active Glow Tab - Automatically illuminates current tab based on URL path
+    function syncActiveTab() {
+      try {
+        const path = window.location.pathname.toLowerCase();
+        document.querySelectorAll('.user-nav-link').forEach(link => {
+          const href = (link.getAttribute('href') || '').toLowerCase();
+          const page = href.split('/').pop().split('?')[0];
+          const isCurrent = path.endsWith(page) || 
+                           (page === 'dashboard.html' && (path === '/user' || path === '/user/' || path.endsWith('/user/dashboard.html')));
+          if (isCurrent) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    syncActiveTab();
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      syncActiveTab();
+      if (!Auth.requireAuth('user')) return;
+
+      const user = Auth.getUser();
+      if (user) {
+        const userName = user.name || user.email || 'nakrani';
+        const greetingEl = document.getElementById('user-greeting');
+        if (greetingEl) greetingEl.textContent = userName;
+      }
+
+      const container = document.getElementById('user-offers-container');
+
+      // 1. First fetch user-specific offers
+      let res = await API.get('/api/users/offers');
+      let offers = [];
+
+      if (res.success && Array.isArray(res.data) && res.data.length > 0) {
+        offers = res.data.map(uo => uo.offer || uo);
+      } else {
+        // Fallback to active admin offers
+        const adminRes = await API.get('/api/admin/offers');
+        if (adminRes.success && Array.isArray(adminRes.data)) {
+          offers = adminRes.data;
+        }
+      }
+
+      if (offers.length === 0) {
+        container.innerHTML = '<div style="grid-column: 1 / -1; padding: 3rem; background: #fff; border-radius: 8px; text-align: center; color: #64748b;">No active retention offers assigned to your account yet. Check back soon!</div>';
+        return;
+      }
+
+      container.innerHTML = '';
+      offers.forEach(o => {
+        const card = document.createElement('div');
+        card.className = 'user-offer-card';
+        const code = o.voucher_code || 'SPECIAL15';
+        const discount = o.discount_percentage || 10;
+
+        card.innerHTML = `
+          <div>
+            <div class="flex justify-between items-center" style="margin-bottom: 0.5rem;">
+              <span class="badge badge-sky">${discount}% DISCOUNT</span>
+              <span class="text-xs text-muted">Voucher Available</span>
+            </div>
+            <h3 style="font-size: 1.15rem; margin-bottom: 0.5rem;">${o.title}</h3>
+            <p class="text-sm text-muted" style="margin-bottom: 1.25rem;">${o.description}</p>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center" style="padding-top: 1rem; border-top: 1px solid var(--border-light);">
+              <span style="font-family: monospace; font-weight: 700; background: var(--bg-subtle); padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">${code}</span>
+              <button class="btn btn-primary btn-sm claim-btn">Apply Voucher</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      document.querySelectorAll('.claim-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.disabled = true;
+          btn.className = 'btn btn-secondary btn-sm';
+          btn.textContent = '✓ Applied';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

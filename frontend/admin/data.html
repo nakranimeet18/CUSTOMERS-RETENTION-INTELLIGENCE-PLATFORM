@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Data Sources | ChurnIQ Admin</title>
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/sidebar.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">CQ</div>
+        <div class="sidebar-brand-name">ChurnIQ</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-group-label">Main</div>
+        <a href="/admin/dashboard.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Dashboard
+        </a>
+        <a href="/admin/users.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          All Users
+        </a>
+        <a href="/admin/churned.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="9" x2="12" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+          Churned Users
+        </a>
+        <a href="/admin/offers.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Offers & Vouchers
+        </a>
+        <a href="/admin/data.html" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+          Customer Data (CSV/DB)
+        </a>
+        <a href="/admin/analytics.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Churn Analytics
+        </a>
+
+        <div class="nav-group-label" style="margin-top: 1.5rem;">Shortcuts</div>
+        <a href="/user/dashboard.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          User Portal View
+        </a>
+      </nav>
+    </aside>
+    
+
+    <div class="main-wrapper">
+
+      <header class="top-bar">
+        <h1 class="page-title">Customer Data: CSV vs Live Database</h1>
+        <div class="account-dropdown-wrapper">
+          <button id="account-dropdown-btn" class="account-btn">
+            <div id="admin-avatar-char" class="avatar-circle">A</div>
+            <span id="admin-display-name">Administrator</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">&#9660;</span>
+          </button>
+          <div id="account-dropdown-menu" class="account-menu">
+            <a href="/admin/dashboard.html" class="account-menu-item">Dashboard</a>
+            <a href="/admin/users.html" class="account-menu-item">Manage Users</a>
+            <div style="border-top: 1px solid #f1f5f9; margin: 0.25rem 0;"></div>
+            <div onclick="Auth.logout()" class="account-menu-item" style="color: #ef4444;">Sign Out</div>
+          </div>
+        </div>
+      </header>
+    
+
+      <main class="content-body">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+          <!-- CSV Dataset Card -->
+          <div class="card" style="border-top: 4px solid #6366f1;">
+            <div class="flex justify-between items-center" style="margin-bottom: 0.75rem;">
+              <span class="badge" style="background: #e0e7ff; color: #4338ca;">Historical Batch Data</span>
+              <span class="text-xs text-muted font-bold">CSV Loader</span>
+            </div>
+            <h2 style="font-size: 1.4rem; margin-bottom: 0.5rem;">Pre-processed CSV Records</h2>
+            <p class="text-sm text-muted" style="margin-bottom: 1.25rem;">
+              Loaded from cleaned training/validation dataset with pre-evaluated XGBoost risk inference.
+            </p>
+            <div style="padding: 1rem; background: #f8fafc; border-radius: 6px; margin-bottom: 1rem;">
+              <div class="text-xs text-muted font-bold uppercase">Loaded Batch Count</div>
+              <div id="data-csv-count" style="font-size: 2rem; font-weight: 700; color: #6366f1;">--</div>
+            </div>
+            <a href="/admin/users.html" class="btn btn-secondary w-full btn-sm">Filter CSV Users &rarr;</a>
+          </div>
+
+          <!-- Live Database Card -->
+          <div class="card" style="border-top: 4px solid #0284c7;">
+            <div class="flex justify-between items-center" style="margin-bottom: 0.75rem;">
+              <span class="badge badge-sky">Live MySQL (Aiven)</span>
+              <span class="text-xs text-muted font-bold">SQLAlchemy DB</span>
+            </div>
+            <h2 style="font-size: 1.4rem; margin-bottom: 0.5rem;">Live Registered Users</h2>
+            <p class="text-sm text-muted" style="margin-bottom: 1.25rem;">
+              Real users registered via /api/auth/register with persistent database profiles and assignable offers.
+            </p>
+            <div style="padding: 1rem; background: #f8fafc; border-radius: 6px; margin-bottom: 1rem;">
+              <div class="text-xs text-muted font-bold uppercase">Active Database Accounts</div>
+              <div id="data-db-count" style="font-size: 2rem; font-weight: 700; color: #0284c7;">--</div>
+            </div>
+            <a href="/admin/users.html" class="btn btn-primary w-full btn-sm">Filter Database Users &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Technical Integration Note -->
+        <div class="card" style="background: #f0f9ff; border-color: #bae6fd;">
+          <h3 style="color: #0369a1; margin-bottom: 0.5rem;">Unified User Resolution</h3>
+          <p class="text-sm" style="color: #0c4a6e;">
+            The FastAPI endpoint <code>GET /api/admin/users</code> seamlessly merges both historical CSV dataset records and active MySQL registered accounts into a single unified schema (<code>UnifiedUser</code>), calculating churn probabilities on the fly.
+          </p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/auth.js"></script>
+  <script src="/assets/js/ml-background.js"></script>
+  <script src="/assets/js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const res = await API.get('/api/admin/users?limit=500');
+      if (res.success && Array.isArray(res.data)) {
+        const users = res.data;
+        const csvCount = users.filter(u => u.source === 'csv').length;
+        const dbCount = users.filter(u => u.source === 'database').length;
+
+        document.getElementById('data-csv-count').textContent = csvCount.toLocaleString() + ' records';
+        document.getElementById('data-db-count').textContent = dbCount.toLocaleString() + ' accounts';
+      }
+    });
+  </script>
+
+</body>
+</html>

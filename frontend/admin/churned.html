@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Churned Users | ChurnIQ Admin</title>
+  <link rel="stylesheet" href="/assets/css/theme.css">
+  <link rel="stylesheet" href="/assets/css/sidebar.css">
+</head>
+<body>
+
+  <div class="app-wrapper">
+
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo-icon">CQ</div>
+        <div class="sidebar-brand-name">ChurnIQ</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-group-label">Main</div>
+        <a href="/admin/dashboard.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          Dashboard
+        </a>
+        <a href="/admin/users.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          All Users
+        </a>
+        <a href="/admin/churned.html" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="9" x2="12" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+          Churned Users
+        </a>
+        <a href="/admin/offers.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          Offers & Vouchers
+        </a>
+        <a href="/admin/data.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+          Customer Data (CSV/DB)
+        </a>
+        <a href="/admin/analytics.html" class="nav-item ">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          Churn Analytics
+        </a>
+
+        <div class="nav-group-label" style="margin-top: 1.5rem;">Shortcuts</div>
+        <a href="/user/dashboard.html" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+          User Portal View
+        </a>
+      </nav>
+    </aside>
+    
+
+    <div class="main-wrapper">
+
+      <header class="top-bar">
+        <h1 class="page-title">Churned & At-Risk Customers</h1>
+        <div class="account-dropdown-wrapper">
+          <button id="account-dropdown-btn" class="account-btn">
+            <div id="admin-avatar-char" class="avatar-circle">A</div>
+            <span id="admin-display-name">Administrator</span>
+            <span style="font-size: 0.7rem; color: #94a3b8;">&#9660;</span>
+          </button>
+          <div id="account-dropdown-menu" class="account-menu">
+            <a href="/admin/dashboard.html" class="account-menu-item">Dashboard</a>
+            <a href="/admin/users.html" class="account-menu-item">Manage Users</a>
+            <div style="border-top: 1px solid #f1f5f9; margin: 0.25rem 0;"></div>
+            <div onclick="Auth.logout()" class="account-menu-item" style="color: #ef4444;">Sign Out</div>
+          </div>
+        </div>
+      </header>
+    
+
+      <main class="content-body">
+        <div class="card" style="margin-bottom: 1.25rem; background-color: #fff1f2; border-color: #fecdd3;">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 style="color: #9f1239; font-size: 1.15rem; margin-bottom: 0.25rem;">High Churn Priority Watchlist</h3>
+              <p class="text-sm" style="color: #be123c; margin: 0;">
+                Accounts flagged by the XGBoost model with high churn probability (>=50%) or complaint escalation.
+              </p>
+            </div>
+            <a href="/admin/offers.html" class="btn btn-danger btn-sm">Deploy Retention Offers &rarr;</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex justify-between items-center" style="margin-bottom: 1rem;">
+            <span id="churned-count" class="text-sm font-bold text-muted">Loading churned accounts...</span>
+            <select id="priority-sort" class="form-select" style="width: auto;">
+              <option value="desc">Highest Churn Probability First</option>
+              <option value="asc">Lowest Probability First</option>
+            </select>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Customer Profile</th>
+                  <th>Churn Probability</th>
+                  <th>Priority Tier</th>
+                  <th>City Tier</th>
+                  <th>Tenure</th>
+                  <th>Complaints</th>
+                  <th>Key Churn Reasons</th>
+                  <th class="text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="churned-users-tbody">
+                <tr><td colspan="8" class="text-muted" style="text-align: center; padding: 2.5rem;">Fetching churned records from API...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="/assets/js/api.js"></script>
+  <script src="/assets/js/auth.js"></script>
+  <script src="/assets/js/ml-background.js"></script>
+  <script src="/assets/js/admin.js"></script>
+  <script>
+    let churnedUsers = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const res = await API.get('/api/admin/churned-users?min_probability=0.5');
+      if (res.success && Array.isArray(res.data)) {
+        churnedUsers = res.data;
+        renderChurned();
+      }
+
+      document.getElementById('priority-sort').addEventListener('change', (e) => {
+        const order = e.target.value;
+        churnedUsers.sort((a, b) => {
+          return order === 'desc' 
+            ? (b.churn_probability - a.churn_probability) 
+            : (a.churn_probability - b.churn_probability);
+        });
+        renderChurned();
+      });
+    });
+
+    function renderChurned() {
+      const countEl = document.getElementById('churned-count');
+      const tbody = document.getElementById('churned-users-tbody');
+
+      countEl.textContent = `Found ${churnedUsers.length} At-Risk / Churned Customers`;
+
+      if (churnedUsers.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; padding: 3rem; color: #64748b;">No high churn risk accounts found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = '';
+      churnedUsers.forEach(u => {
+        const prob = Math.round((u.churn_probability || 0.7) * 100);
+        const level = u.risk_level || 'High';
+        const badgeClass = level === 'High' ? 'badge-high' : 'badge-medium';
+        const reasons = (u.churn_reasons && u.churn_reasons.length > 0) ? u.churn_reasons.join(', ') : 'Early lifecycle departure';
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <div class="font-bold" style="color: #0f172a;">${u.email_or_name || 'Customer'}</div>
+            <div class="text-xs text-muted" style="font-family: monospace;">${u.id}</div>
+          </td>
+          <td><span class="font-bold" style="color: #ef4444; font-size: 1rem;">${prob}%</span></td>
+          <td><span class="badge ${badgeClass}">${level} Priority</span></td>
+          <td>Tier ${u.city_tier || 1}</td>
+          <td>${u.tenure || 1} mos</td>
+          <td>${u.complain === 1 ? '<span style="color: #ef4444; font-weight: 700;">Yes</span>' : 'No'}</td>
+          <td style="max-width: 260px; font-size: 0.8rem; color: #475569;">${reasons}</td>
+          <td class="text-right">
+            <a href="/admin/offers.html?user_id=${encodeURIComponent(u.customer_id || u.id)}" class="btn btn-primary btn-sm">Assign Offer</a>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+  </script>
+
+</body>
+</html>
