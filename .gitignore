@@ -216,7 +216,4 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-retention_app.db
-*.pkl
 DataSet/
-Tableau Dashboard/
