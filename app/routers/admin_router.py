@@ -115,6 +115,9 @@ def get_dashboard_stats(
     medium_risk = len([u for u in all_users if u.risk_level == "Medium"])
 
     active_offers = db.query(Offer).filter(Offer.is_active == True).count()
+    db_users_count = db.query(User).filter(User.role == "user").count()
+    csv_users = CSVDataLoader.load_csv_users(limit=10000)
+    csv_users_count = len(csv_users)
 
     return AdminDashboardStats(
         total_users=total_users,
@@ -123,7 +126,9 @@ def get_dashboard_stats(
         churn_rate_percentage=round(churn_rate, 2),
         high_risk_count=high_risk,
         medium_risk_count=medium_risk,
-        active_offers_count=active_offers
+        active_offers_count=active_offers,
+        csv_users_count=csv_users_count,
+        db_users_count=db_users_count
     )
 
 

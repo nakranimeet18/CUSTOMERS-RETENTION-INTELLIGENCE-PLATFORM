@@ -216,4 +216,9 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-DataSet/
+
+# Heavy raw secondary datasets (Brazil Olist)
+DataSet/RAW/
+DataSet/cleaned/olist_*
+.DS_Store
+*/.DS_Store

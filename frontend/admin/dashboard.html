@@ -216,16 +216,24 @@
         document.getElementById('stat-high-risk').textContent = s.high_risk_count.toLocaleString();
         document.getElementById('stat-medium-risk').textContent = s.medium_risk_count.toLocaleString();
         document.getElementById('stat-active-offers').textContent = s.active_offers_count.toLocaleString();
+        if (s.csv_users_count !== undefined) {
+          document.getElementById('val-csv-count').textContent = s.csv_users_count.toLocaleString();
+        }
+        if (s.db_users_count !== undefined) {
+          document.getElementById('val-db-count').textContent = s.db_users_count.toLocaleString();
+        }
       }
 
-      // 2. Fetch Users to compute CSV vs DB and display high-risk accounts
+      // 2. Fetch Users to display high-risk accounts
       const usersRes = await API.get('/api/admin/users?limit=300');
       if (usersRes.success && Array.isArray(usersRes.data)) {
         const users = usersRes.data;
-        const csvCount = users.filter(u => u.source === 'csv').length;
-        const dbCount = users.filter(u => u.source === 'database').length;
-        document.getElementById('val-csv-count').textContent = csvCount;
-        document.getElementById('val-db-count').textContent = dbCount;
+        if (!statsRes.success || !statsRes.data || statsRes.data.csv_users_count === undefined) {
+          const csvCount = users.filter(u => u.source === 'csv').length;
+          const dbCount = users.filter(u => u.source === 'database').length;
+          document.getElementById('val-csv-count').textContent = csvCount;
+          document.getElementById('val-db-count').textContent = dbCount;
+        }
 
         // High risk slice
         const highRisk = users.filter(u => u.risk_level === 'High' || u.churn_probability >= 0.65).slice(0, 5);

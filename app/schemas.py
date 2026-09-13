@@ -171,3 +171,5 @@ class AdminDashboardStats(BaseModel):
     high_risk_count: int
     medium_risk_count: int
     active_offers_count: int
+    csv_users_count: int = 0
+    db_users_count: int = 0

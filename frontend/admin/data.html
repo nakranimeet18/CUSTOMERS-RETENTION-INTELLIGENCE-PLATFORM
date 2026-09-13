@@ -127,14 +127,20 @@
   <script src="/assets/js/admin.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
-      const res = await API.get('/api/admin/users?limit=500');
-      if (res.success && Array.isArray(res.data)) {
-        const users = res.data;
-        const csvCount = users.filter(u => u.source === 'csv').length;
-        const dbCount = users.filter(u => u.source === 'database').length;
+      const statsRes = await API.get('/api/admin/stats');
+      if (statsRes.success && statsRes.data && statsRes.data.csv_users_count !== undefined) {
+        document.getElementById('data-csv-count').textContent = statsRes.data.csv_users_count.toLocaleString() + ' records';
+        document.getElementById('data-db-count').textContent = statsRes.data.db_users_count.toLocaleString() + ' accounts';
+      } else {
+        const res = await API.get('/api/admin/users?limit=500');
+        if (res.success && Array.isArray(res.data)) {
+          const users = res.data;
+          const csvCount = users.filter(u => u.source === 'csv').length;
+          const dbCount = users.filter(u => u.source === 'database').length;
 
-        document.getElementById('data-csv-count').textContent = csvCount.toLocaleString() + ' records';
-        document.getElementById('data-db-count').textContent = dbCount.toLocaleString() + ' accounts';
+          document.getElementById('data-csv-count').textContent = csvCount.toLocaleString() + ' records';
+          document.getElementById('data-db-count').textContent = dbCount.toLocaleString() + ' accounts';
+        }
       }
     });
   </script>

@@ -1,0 +1,2 @@
+Model,Baseline F1,Tuned F1,Final F1 Used,Best Params
+XGBoost,0.938337801608579,0.946524064171123,0.946524064171123,"{'subsample': 1.0, 'n_estimators': 500, 'max_depth': 8, 'learning_rate': 0.1, 'colsample_bytree': 0.7}"
