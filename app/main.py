@@ -21,6 +21,26 @@ async def lifespan(app: FastAPI):
     Base.metadata.create_all(bind=engine)
     print("✅ Database tables created successfully.")
     
+    # Auto-seed default admin account if not present (for cloud MySQL deployment)
+    try:
+        from app.database import SessionLocal
+        from app.models import User
+        from app.auth import get_password_hash
+        with SessionLocal() as db_session:
+            admin_user = db_session.query(User).filter(User.email == "admin@retention.com").first()
+            if not admin_user:
+                admin_user = User(
+                    email="admin@retention.com",
+                    hashed_password=get_password_hash("Admin@123"),
+                    full_name="Super Admin",
+                    role="admin"
+                )
+                db_session.add(admin_user)
+                db_session.commit()
+                print("👑 Seeded default admin account: admin@retention.com / Admin@123")
+    except Exception as e:
+        print(f"⚠️ Notice while seeding default admin: {e}")
+
     # Pre-cache CSV user dataset & ML predictions
     CSVDataLoader.load_csv_users(limit=50)
     print("✅ Ready to serve requests.")

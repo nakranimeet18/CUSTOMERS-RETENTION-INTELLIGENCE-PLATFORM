@@ -9,16 +9,33 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
 
 # Database configuration
+DATABASE_URL_ENV = os.getenv("DATABASE_URL", "").strip()
+
 MYSQL_USER = os.getenv("MYSQL_USER", "root")
 MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "")
 MYSQL_HOST = os.getenv("MYSQL_HOST", "127.0.0.1")
 MYSQL_PORT = os.getenv("MYSQL_PORT", "3306")
 MYSQL_DB = os.getenv("MYSQL_DB", "customer_retention")
 
-# Enable MySQL if USE_MYSQL is true in .env
-USE_MYSQL = os.getenv("USE_MYSQL", "false").lower() in ("true", "1", "yes")
+# Enable MySQL if USE_MYSQL is true in .env or if DATABASE_URL contains mysql
+USE_MYSQL = (
+    os.getenv("USE_MYSQL", "false").lower() in ("true", "1", "yes")
+    or "mysql" in DATABASE_URL_ENV.lower()
+)
 
-if USE_MYSQL:
+if DATABASE_URL_ENV:
+    import re
+    # Remove unsupported query parameters like '?ssl-mode=REQUIRED' from Aiven URI to prevent PyMySQL kwargs error
+    clean_url = re.sub(r'[\?\&]ssl-mode=[^&]+', '', DATABASE_URL_ENV)
+    if '?' not in clean_url and '&' in clean_url:
+        clean_url = clean_url.replace('&', '?', 1)
+        
+    # Auto-convert Aiven/Render 'mysql://' prefix to SQLAlchemy PyMySQL 'mysql+pymysql://'
+    if clean_url.startswith("mysql://"):
+        DATABASE_URL = clean_url.replace("mysql://", "mysql+pymysql://", 1)
+    else:
+        DATABASE_URL = clean_url
+elif USE_MYSQL:
     # URL-encode password to handle special characters like '@' and '#' cleanly in SQLAlchemy
     encoded_pwd = urllib.parse.quote_plus(MYSQL_PASSWORD)
     DATABASE_URL = f"mysql+pymysql://{MYSQL_USER}:{encoded_pwd}@{MYSQL_HOST}:{MYSQL_PORT}/{MYSQL_DB}"
