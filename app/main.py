@@ -102,6 +102,7 @@ if FRONTEND_DIR.exists():
     app.mount("/frontend", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="frontend_root")
 
 
+@app.get("/login", tags=["Frontend"], include_in_schema=False)
 @app.get("/login.html", tags=["Frontend"])
 def login_page():
     login_file = FRONTEND_DIR / "login.html"
@@ -110,6 +111,7 @@ def login_page():
     return JSONResponse(status_code=404, content={"message": "login.html not found"})
 
 
+@app.get("/register", tags=["Frontend"], include_in_schema=False)
 @app.get("/register.html", tags=["Frontend"])
 def register_page():
     reg_file = FRONTEND_DIR / "register.html"

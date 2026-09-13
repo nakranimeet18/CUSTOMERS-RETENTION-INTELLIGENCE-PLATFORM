@@ -2,7 +2,16 @@
  * Central API client for Customer Retention Intelligence Platform
  */
 const API = {
-  BASE_URL: window.location.port === '8000' ? '' : (window.API_BASE_URL || 'http://localhost:8000'),
+  BASE_URL: (() => {
+    if (window.API_BASE_URL) return window.API_BASE_URL;
+    if (window.location.protocol === 'file:') return 'http://localhost:8000';
+    // If running on a local development server with a custom port (e.g. Live Server on 5500 or 3000)
+    if ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port && window.location.port !== '8000') {
+      return 'http://localhost:8000';
+    }
+    // On production (e.g. Render, Railway, custom domain) or when served directly from FastAPI backend
+    return '';
+  })(),
 
   getToken() {
     return localStorage.getItem('crip_token') || sessionStorage.getItem('crip_token');
@@ -27,7 +36,7 @@ const API = {
         localStorage.removeItem('crip_token');
         localStorage.removeItem('crip_user');
         sessionStorage.clear();
-        if (!window.location.pathname.endsWith('login.html')) {
+        if (!window.location.pathname.endsWith('login.html') && !window.location.pathname.includes('login')) {
           window.location.href = '/login.html';
         }
         return { success: false, error: 'Session expired. Please log in again.' };
@@ -35,7 +44,10 @@ const API = {
 
       if (!response.ok) {
         const errData = await response.json().catch(() => ({}));
-        const msg = errData.detail || errData.message || `Request failed with status ${response.status}`;
+        let msg = errData.detail || errData.message || `Request failed with status ${response.status}`;
+        if (Array.isArray(msg)) {
+          msg = msg.map(e => e.msg || JSON.stringify(e)).join(', ');
+        }
         return { success: false, error: msg };
       }
 
